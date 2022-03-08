@@ -1,0 +1,55 @@
+@use "sass:list";
+@import "./theme.scss";
+
+:root {
+  --fw-size-gap: 16px;
+
+  @each $name, $value in $colors {
+    --fw-light-#{$name}: #{list.nth($value, 1)};
+    --fw-dark-#{$name}: #{list.nth($value, 2)};
+    --fw-color-#{$name}: var(--fw-light-#{$name});
+  }
+}
+
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     @each $name, $_ in $colors {
+//       --fw-color-#{$name}: var(--fw-dark-#{$name});
+//     }
+//   }
+// }
+
+html {
+  // color-scheme: light;
+  &[data-theme="dark"] {
+    // color-scheme: dark;
+    @each $name, $_ in $colors {
+      --fw-color-#{$name}: var(--fw-dark-#{$name});
+    }
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: var(--fw-color-font);
+  background-color: var(--fw-color-bg);
+  transition: color 0.5s, background-color 0.5s;
+}
+
+canvas,
+img {
+  display: block;
+}
+
+.shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
